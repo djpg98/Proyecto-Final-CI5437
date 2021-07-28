@@ -393,24 +393,23 @@ void depth_first_bnb(){
 
 }
 
-double run_herd_karp(int startVertex, unordered_set<int> set)
+double run_herd_karp(unordered_set<int> set, int origin)
 {
-    if (set.empty()) { return dmatrix[startVertex][0]; }
+    if (set.empty()) { return dmatrix[origin][0]; }
 
-    double totalCost = DBL_MAX;
+    double min_cost = DBL_MAX;
     for (int destination: set)
     {
-        unordered_set<int> newSet = unordered_set<int>(set);
-        newSet.erase(destination);
+        unordered_set<int> sub_set = unordered_set<int>(set).erase(destination);
 
-        double costOfVistingCurrentNode = dmatrix[startVertex][destination];
-        double costOfVisitingOtherNodes = run_herd_karp(destination, newSet);
-        double currentCost = costOfVistingCurrentNode + costOfVisitingOtherNodes;
+        double c_origin_destination = dmatrix[origin][destination];
+        double g = run_herd_karp(sub_set, destination);
+        double curren_cost = c_origin_destination + g;
 
-        if (totalCost > currentCost) { totalCost = currentCost; }
+        if (min_cost > curren_cost) { min_cost = curren_cost; }
     }
 
-    return totalCost;
+    return min_cost;
 }
 
 void herd_karp() {
@@ -418,7 +417,7 @@ void herd_karp() {
     for (int i = 1; i < rows; i++) {
         set.insert(i);
     }
-    cout << run_herd_karp(0, set) << "\n";
+    cout << run_herd_karp(set, 0) << "\n";  // Just for print purposes, see what we can do with it
 }
 
 int main(int argc, char** argv){
