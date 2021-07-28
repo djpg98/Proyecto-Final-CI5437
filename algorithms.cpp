@@ -17,13 +17,22 @@ chrono::high_resolution_clock::time_point tstart, tend;
 vector<int> state, best_solution;
 set<int> in_path, outside;
 string name;
-double g_value, best_bound, initial_bound;
+double g_value, best_bound, initial_bound, actual_solution;
 double ** dmatrix;
 int  min_not_added, rows, depth;
 unsigned long generated, expanded;
 
 void sigalrm_handler(int sig){
-    cout << name << "," << "TIMEOUT" << "," << initial_bound << "," << generated << "," << expanded << "," << best_bound << 600000 <<"\n";
+    cout << name << "," << "TIMEOUT" << "," << initial_bound << "," << generated << "," << expanded << "," << best_bound << "," << 600000 <<"\n";
+    exit(EXIT_SUCCESS);
+}
+
+//For approximate algorithms
+void sigalrm_handler2(int sig){
+    double error_p;
+    error_p = best_bound / actual_solution;
+    cout << name << "," << "TIMEOUT" << "," << best_bound << "," << actual_solution << error_p << 600000 <<"\n";
+    exit(EXIT_SUCCESS);
 }
 
 double ** read_asymetric_matrix(string file_name, int & rows, int & cols){
@@ -352,8 +361,9 @@ void depth_first_bnb_visit(){
 }
 
 void depth_first_bnb(){
-    /*
+
     //With random permutation
+    /*
     for(int i = 0; i < rows; i++){
         best_solution.push_back(i);
         outside.insert(i);
@@ -393,28 +403,34 @@ void depth_first_bnb(){
 
 int main(int argc, char** argv){
     string file_name;
+    double error_p;
     int cols;
 
     file_name = argv[1];
+
+    if (argc == 3){
+        actual_solution = stod(argv[2]);
+    }
 
     name = file_name;
 
     dmatrix = read_asymetric_matrix(file_name, rows, cols);
 
     //State space search Methods
-    tstart = chrono::high_resolution_clock::now();
+    /*tstart = chrono::high_resolution_clock::now();
     signal(SIGALRM, &sigalrm_handler);  // set a signal handler
     alarm(600);  // set an alarm for 900 seconds from now
     depth_first_bnb();
     tend = chrono::high_resolution_clock::now();
     chrono::milliseconds time_taken = chrono::duration_cast<std::chrono::milliseconds>( tend - tstart );
     cout << file_name << "," << "FIN" << "," << initial_bound << "," << generated << "," << expanded << "," << best_bound << "," << time_taken.count() <<"\n";
+    */
 
     /*TO DO: 
         THAT ALGORITHM
     */
    
-    /*
+    
     //APROXIMATE-HEURISTIC METHODS
     tstart = chrono::high_resolution_clock::now();
     //best_bound = nearest_neighbour_rand();
@@ -423,8 +439,7 @@ int main(int argc, char** argv){
     two_opt();
     tend = chrono::high_resolution_clock::now();
     chrono::milliseconds time_taken = chrono::duration_cast<std::chrono::milliseconds>( tend - tstart );
-    cout << "Tiempo: " << time_taken.count() << "\n";
-    cout << "Costo: " << best_bound << "\n";
-    */
+    error_p = best_bound / actual_solution;
+    cout << name << "," << "FIN" << "," << best_bound << "," << actual_solution << "," << error_p << "," << time_taken.count() <<"\n";
 
 }

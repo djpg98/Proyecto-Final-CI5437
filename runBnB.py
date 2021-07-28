@@ -8,6 +8,7 @@ mark = now.strftime('%d%H%M')
 
 #5, 15, 17, 26, 42, 48
 test_cases = ['FIVE.txt', 'P01.txt', 'GR17.txt', 'FRI26.txt', 'DANTZIG42.txt', 'ATT48.txt', 'berlin52.txt', 'st70.txt', 'pr76.txt', 'eil101.txt', 'bier127.txt']
+#test_cases = ['berlin52.txt', 'st70.txt', 'pr76.txt', 'eil101.txt', 'bier127.txt']
 
 file_name = f'results_{sys.argv[1]}_{mark}'
 

@@ -9,7 +9,7 @@ def euclidean(p1, p2):
 with open(sys.argv[1], 'r') as cities:
     for line in cities:
         info = line.split()
-        coordinates.append((int(info[0].replace('.0', '')), int(info[1].replace('.0',''))))
+        coordinates.append((int(info[1].replace('.0', '')), int(info[2].replace('.0',''))))
 
     cities.close()
 
