@@ -6,6 +6,8 @@
 #include <queue>
 #include <limits> 
 #include <algorithm>
+#include <float.h>
+#include <bits/stdc++.h>
 #include <chrono>
 #include <set>
 #include <csignal>
@@ -391,6 +393,34 @@ void depth_first_bnb(){
 
 }
 
+double run_herd_karp(int startVertex, unordered_set<int> set)
+{
+    if (set.empty()) { return dmatrix[startVertex][0]; }
+
+    double totalCost = DBL_MAX;
+    for (int destination: set)
+    {
+        unordered_set<int> newSet = unordered_set<int>(set);
+        newSet.erase(destination);
+
+        double costOfVistingCurrentNode = dmatrix[startVertex][destination];
+        double costOfVisitingOtherNodes = run_herd_karp(destination, newSet);
+        double currentCost = costOfVistingCurrentNode + costOfVisitingOtherNodes;
+
+        if (totalCost > currentCost) { totalCost = currentCost; }
+    }
+
+    return totalCost;
+}
+
+void herd_karp() {
+    unordered_set<int> set;
+    for (int i = 1; i < rows; i++) {
+        set.insert(i);
+    }
+    cout << run_herd_karp(0, set) << "\n";
+}
+
 int main(int argc, char** argv){
     string file_name;
     int cols;
@@ -405,7 +435,8 @@ int main(int argc, char** argv){
     tstart = chrono::high_resolution_clock::now();
     signal(SIGALRM, &sigalrm_handler);  // set a signal handler
     alarm(600);  // set an alarm for 900 seconds from now
-    depth_first_bnb();
+    // depth_first_bnb();
+    herd_karp();
     tend = chrono::high_resolution_clock::now();
     chrono::milliseconds time_taken = chrono::duration_cast<std::chrono::milliseconds>( tend - tstart );
     cout << file_name << "," << "FIN" << "," << initial_bound << "," << generated << "," << expanded << "," << best_bound << "," << time_taken.count() <<"\n";
