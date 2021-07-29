@@ -1,0 +1,12 @@
+Dataset, status, cost, time
+Datasets/FIVE.txt, FIN, 19, 2
+Datasets/P01.txt,TIMEOUT,0, 600000
+Datasets/GR17.txt,TIMEOUT,0, 600000
+Datasets/FRI26.txt,TIMEOUT,0, 600000
+Datasets/DANTZIG42.txt,TIMEOUT,0, 600000
+Datasets/ATT48.txt,TIMEOUT,0, 600000
+Datasets/berlin52.txt,TIMEOUT,0, 600000
+Datasets/st70.txt,TIMEOUT,0, 600000
+Datasets/pr76.txt,TIMEOUT,0, 600000
+Datasets/eil101.txt,TIMEOUT,0, 600000
+Datasets/bier127.txt,TIMEOUT,0, 600000
