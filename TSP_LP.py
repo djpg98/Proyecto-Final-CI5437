@@ -1,5 +1,6 @@
 from pulp import *
 import sys
+import time
 
 matrix = []
 variables = []
@@ -75,6 +76,7 @@ def create_cost_matrix(file_name):
 
 ###########MAIN############
 create_cost_matrix(sys.argv[1])
+time1 = time.process_time()
 flat_vars = [var for row in variables for var in row]
 flat_costs = [cost for row in matrix for cost in row]
 cost_d = dict(zip(flat_vars, flat_costs))
@@ -101,8 +103,15 @@ while(not check_solution(model)):
 
     model.solve()
 
-for v in model.variables():
-    if v.varValue > 0:
-        print(v.name, "=", v.varValue)
+time2 = time.process_time()
 
-print(f"Value: {value(model.objective)}")
+"""for v in model.variables():
+    if v.varValue > 0:
+        print(v.name, "=", v.varValue)"""
+
+"""print(f"Value: {value(model.objective)}")"""
+
+with open(sys.argv[2], 'a') as r:
+    print(f'{sys.argv[1]},FIN,{value(model.objective)},{time2 - time1}\n')
+    r.write(f'{sys.argv[1]},FIN,{value(model.objective)},{time2 - time1}\n')
+    r.close()
