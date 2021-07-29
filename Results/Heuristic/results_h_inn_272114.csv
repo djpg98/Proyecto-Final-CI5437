@@ -1,3 +1,4 @@
+Dataset,Status,Cost,OptimalSolution,Rate,Time
 Datasets/FIVE.txt,FIN,22,19,1.15789,0
 Datasets/P01.txt,FIN,527,291,1.811,0
 Datasets/GR17.txt,FIN,3585,2085,1.71942,0
