@@ -76,7 +76,7 @@ def create_cost_matrix(file_name):
 
 ###########MAIN############
 create_cost_matrix(sys.argv[1])
-time1 = time.process_time()
+time1 = time.time()
 flat_vars = [var for row in variables for var in row]
 flat_costs = [cost for row in matrix for cost in row]
 cost_d = dict(zip(flat_vars, flat_costs))
@@ -99,17 +99,18 @@ while(not check_solution(model)):
     
     for i in range(1, new_restrictions + 1):
         var_set = additional[-1 * i]
-        model += lpSum([modelVars[i] for i in var_set]) <= len(var_set) - 1
+        model += lpSum([modelVars[i] for i in var_set]) <= (len(var_set)) - 1
 
     model.solve()
 
-time2 = time.process_time()
+time2 = time.time()
 
 """for v in model.variables():
     if v.varValue > 0:
-        print(v.name, "=", v.varValue)"""
+        print(v.name, "=", v.varValue)
 
-"""print(f"Value: {value(model.objective)}")"""
+print(f"Value: {value(model.objective)}")
+print(f'{sys.argv[1]},FIN,{value(model.objective)},{time2 - time1}\n')"""
 
 with open(sys.argv[2], 'a') as r:
     print(f'{sys.argv[1]},FIN,{value(model.objective)},{time2 - time1}\n')
