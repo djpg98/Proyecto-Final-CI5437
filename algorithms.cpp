@@ -410,7 +410,8 @@ double run_herd_karp(unordered_set<int> set, int origin)
     double min_cost = DBL_MAX;
     for (int destination: set)
     {
-        unordered_set<int> sub_set = unordered_set<int>(set).erase(destination);
+        unordered_set<int> sub_set = unordered_set<int>(set);
+        sub_set.erase(destination);
 
         double c_origin_destination = dmatrix[origin][destination];
         double g = run_herd_karp(sub_set, destination);
