@@ -446,21 +446,20 @@ int main(int argc, char** argv){
     dmatrix = read_asymetric_matrix(file_name, rows, cols);
 
     //State space search Methods
-    /*tstart = chrono::high_resolution_clock::now();
+    tstart = chrono::high_resolution_clock::now();
     signal(SIGALRM, &sigalrm_handler);  // set a signal handler
     alarm(600);  // set an alarm for 900 seconds from now
-    // depth_first_bnb();
-    herd_karp();
+    depth_first_bnb();
+    //herd_karp();
     tend = chrono::high_resolution_clock::now();
     chrono::milliseconds time_taken = chrono::duration_cast<std::chrono::milliseconds>( tend - tstart );
     cout << file_name << "," << "FIN" << "," << initial_bound << "," << generated << "," << expanded << "," << best_bound << "," << time_taken.count() <<"\n";
-    */
 
     /*TO DO: 
         THAT ALGORITHM
     */
    
-    
+    /*
     //APROXIMATE-HEURISTIC METHODS
     tstart = chrono::high_resolution_clock::now();
     //best_bound = nearest_neighbour_rand();
@@ -471,5 +470,6 @@ int main(int argc, char** argv){
     chrono::milliseconds time_taken = chrono::duration_cast<std::chrono::milliseconds>( tend - tstart );
     error_p = best_bound / actual_solution;
     cout << name << "," << "FIN" << "," << best_bound << "," << actual_solution << "," << error_p << "," << time_taken.count() <<"\n";
+    */
 
 }
